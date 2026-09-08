@@ -1,5 +1,5 @@
-const LOGIN_API_URL = '/api/auth/login';
-const ME_API_URL = '/api/auth/me';
+const LOGIN_API_URL = `${import.meta.env.VITE_API_BASE_URL || ''}/api/auth/login`;
+const ME_API_URL = `${import.meta.env.VITE_API_BASE_URL || ''}/api/auth/me`;
 
 const parseLoginErrorMessage = (message) => {
   if (!message) return '로그인에 실패했습니다.';

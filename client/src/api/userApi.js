@@ -1,4 +1,4 @@
-const API_BASE_URL = '/api/users';
+const API_BASE_URL = `${import.meta.env.VITE_API_BASE_URL || ''}/api/users`;
 
 const parseErrorMessage = (message) => {
   if (!message) return '회원가입에 실패했습니다.';

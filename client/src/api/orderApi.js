@@ -1,7 +1,7 @@
 import { getToken } from '../utils/authStorage';
 import { notifyCartUpdated } from './cartApi';
 
-const API_BASE_URL = '/api/orders';
+const API_BASE_URL = `${import.meta.env.VITE_API_BASE_URL || ''}/api/orders`;
 
 const parseOrderErrorMessage = (message) => {
   if (!message) return '요청에 실패했습니다.';
