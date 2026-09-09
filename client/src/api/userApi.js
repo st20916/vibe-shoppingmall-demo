@@ -9,16 +9,15 @@ const parseErrorMessage = (message) => {
   if (message.includes('name is required')) return '이름을 입력해주세요.';
   if (message.includes('email is required')) return '이메일을 입력해주세요.';
   if (message.includes('password is required')) return '비밀번호를 입력해주세요.';
+  if (message.includes('user_type must be')) return '회원 유형이 올바르지 않습니다.';
 
   return message;
 };
 
-// POST /api/users — 회원가입 (userController.createUser)
-export const createUser = async (userData) => {
-  const response = await fetch(API_BASE_URL, {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify(userData),
+const request = async (url, options = {}) => {
+  const response = await fetch(url, {
+    headers: { 'Content-Type': 'application/json', ...options.headers },
+    ...options,
   });
 
   let result = {};
@@ -34,3 +33,18 @@ export const createUser = async (userData) => {
 
   return result;
 };
+
+// GET /api/users/count — 총 회원 수 조회
+export const getUserCount = async ({ user_type } = {}) => {
+  const params = new URLSearchParams();
+  if (user_type) params.set('user_type', user_type);
+  const query = params.toString();
+  return request(query ? `${API_BASE_URL}/count?${query}` : `${API_BASE_URL}/count`);
+};
+
+// POST /api/users — 회원가입 (userController.createUser)
+export const createUser = async (userData) =>
+  request(API_BASE_URL, {
+    method: 'POST',
+    body: JSON.stringify(userData),
+  });

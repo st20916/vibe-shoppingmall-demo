@@ -3,15 +3,12 @@ export const ADMIN_MENU = [
     title: '주문 관리',
     items: [
       { label: '주문/배송 조회', to: '/admin/orders' },
-      '취소/교환/반품',
-      '정기배송 관리',
     ],
   },
   {
     title: '상품 관리',
     items: [
       { label: '상품 목록', to: '/admin/products' },
-      { label: '상품 등록', to: '/admin/products?tab=register' },
       '재고 관리',
       '카테고리 관리',
     ],

@@ -51,6 +51,8 @@ npm run dev
 
 | 날짜 | 영역 | 내용 |
 |------|------|------|
+| 2026-09-09 | client | Admin 대시보드 회원 수를 `GET /api/users/count`로 표시 |
+| 2026-09-09 | server | 총 회원 수 조회 API (`GET /api/users/count`) |
 | 2026-09-08 | client/server | 주문 취소 사유(`cancelReason`) 필드·API·UI 연동 |
 | 2026-09-08 | client/server | Admin 주문/배송 조회 페이지 + `GET /api/orders/admin` |
 | 2026-09-08 | client/server | 주문 목록 상태 탭 + `GET /api/orders?status=` 필터 |

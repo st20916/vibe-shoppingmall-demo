@@ -3,6 +3,7 @@ const User = require('../models/User');
 const { generateToken } = require('../utils/jwt');
 
 const SALT_ROUNDS = 10;
+const USER_TYPES = ['customer', 'seller', 'admin'];
 
 const hashPassword = async (password) => bcrypt.hash(password, SALT_ROUNDS);
 
@@ -20,6 +21,29 @@ const getAllUsers = async (req, res, next) => {
   try {
     const users = await User.find().select('-password');
     res.json({ success: true, data: users });
+  } catch (error) {
+    next(error);
+  }
+};
+
+// GET /api/users/count — 총 회원 수 조회 (?user_type= optional)
+const getUserCount = async (req, res, next) => {
+  try {
+    const { user_type: userType } = req.query;
+    const filter = {};
+
+    if (userType) {
+      if (!USER_TYPES.includes(userType)) {
+        return res.status(400).json({
+          success: false,
+          message: `user_type must be one of: ${USER_TYPES.join(', ')}`,
+        });
+      }
+      filter.user_type = userType;
+    }
+
+    const count = await User.countDocuments(filter);
+    res.json({ success: true, data: { count } });
   } catch (error) {
     next(error);
   }
@@ -209,6 +233,7 @@ const getCurrentUser = async (req, res, next) => {
 
 module.exports = {
   getAllUsers,
+  getUserCount,
   getUserById,
   createUser,
   updateUser,

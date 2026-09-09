@@ -1,6 +1,7 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { getProducts } from '../../api/productApi';
+import { getUserCount } from '../../api/userApi';
 import { ADMIN_STATS } from '../../data/adminData';
 import { useAuth } from '../../hooks/useAuth';
 import AdminHeader from './AdminHeader';
@@ -17,6 +18,8 @@ function Admin() {
   const [recentProducts, setRecentProducts] = useState([]);
   const [isFetchingProducts, setIsFetchingProducts] = useState(true);
   const [productsError, setProductsError] = useState('');
+  const [memberCount, setMemberCount] = useState(null);
+  const [isFetchingMemberCount, setIsFetchingMemberCount] = useState(true);
 
   useEffect(() => {
     if (isLoading) return;
@@ -53,12 +56,49 @@ function Admin() {
       }
     };
 
+    const fetchMemberCount = async () => {
+      setIsFetchingMemberCount(true);
+
+      try {
+        const result = await getUserCount();
+        if (!cancelled) {
+          setMemberCount(Number(result.data?.count) || 0);
+        }
+      } catch {
+        if (!cancelled) {
+          setMemberCount(null);
+        }
+      } finally {
+        if (!cancelled) {
+          setIsFetchingMemberCount(false);
+        }
+      }
+    };
+
     fetchRecentProducts();
+    fetchMemberCount();
 
     return () => {
       cancelled = true;
     };
   }, [user, isAdmin]);
+
+  const profileStats = useMemo(
+    () =>
+      ADMIN_STATS.map((stat) => {
+        if (stat.label !== '회원 수') return stat;
+
+        return {
+          ...stat,
+          value: isFetchingMemberCount
+            ? '...'
+            : memberCount === null
+              ? '-'
+              : memberCount.toLocaleString(),
+        };
+      }),
+    [isFetchingMemberCount, memberCount]
+  );
 
   if (isLoading || !user || !isAdmin) {
     return (
@@ -95,7 +135,7 @@ function Admin() {
               </div>
             </div>
             <div className="admin-profile__stats">
-              {ADMIN_STATS.map((stat) => (
+              {profileStats.map((stat) => (
                 <div key={stat.label} className="admin-profile__stat">
                   <span>{stat.label}</span>
                   <strong>{stat.value}</strong>
