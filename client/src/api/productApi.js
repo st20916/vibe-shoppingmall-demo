@@ -6,8 +6,9 @@ const parseProductErrorMessage = (message) => {
   if (message.includes('product_id is required')) return '상품 아이디를 입력해주세요.';
   if (message.includes('name is required')) return '상품 이름을 입력해주세요.';
   if (message.includes('price is required')) return '상품 가격을 입력해주세요.';
-  if (message.includes('category is required')) return '상품 카테고리를 선택해주세요.';
   if (message.includes('category must be')) return '카테고리는 상의, 하의, 악세서리 중 하나여야 합니다.';
+  if (message.includes('category does not exist')) return '존재하지 않는 카테고리입니다.';
+  if (message.includes('category is required')) return '상품 카테고리를 선택해주세요.';
   if (message.includes('image is required')) return '상품 이미지를 입력해주세요.';
   if (message.includes('price must be')) return '가격은 0 이상이어야 합니다.';
   if (message.includes('Delete confirmation is required')) {

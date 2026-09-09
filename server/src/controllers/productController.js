@@ -1,4 +1,6 @@
 const Product = require('../models/Product');
+const Category = require('../models/Category');
+const { ensureDefaultCategories } = Category;
 
 const handleDuplicateKeyError = (error, res) => {
   const field = Object.keys(error.keyPattern)[0];
@@ -15,6 +17,25 @@ const handleValidationError = (error, res) => {
       .map((err) => err.message)
       .join(', '),
   });
+};
+
+const assertValidCategory = async (categoryName) => {
+  await ensureDefaultCategories();
+  const name = typeof categoryName === 'string' ? categoryName.trim() : '';
+  if (!name) {
+    const error = new Error('category is required');
+    error.statusCode = 400;
+    throw error;
+  }
+
+  const category = await Category.findOne({ name });
+  if (!category) {
+    const error = new Error('category does not exist');
+    error.statusCode = 400;
+    throw error;
+  }
+
+  return name;
 };
 
 // GET /api/products — 전체 상품 조회 (페이지네이션: 기본 10개)
@@ -86,18 +107,22 @@ const getProductById = async (req, res, next) => {
 const createProduct = async (req, res, next) => {
   try {
     const { product_id, name, price, category, image, description } = req.body;
+    const validCategory = await assertValidCategory(category);
 
     const product = await Product.create({
       product_id,
       name,
       price,
-      category,
+      category: validCategory,
       image,
       description,
     });
 
     res.status(201).json({ success: true, data: product });
   } catch (error) {
+    if (error.statusCode) {
+      return res.status(error.statusCode).json({ success: false, message: error.message });
+    }
     if (error.code === 11000) {
       return handleDuplicateKeyError(error, res);
     }
@@ -114,11 +139,15 @@ const updateProduct = async (req, res, next) => {
     const allowedFields = ['product_id', 'name', 'price', 'category', 'image', 'description'];
     const updates = {};
 
-    allowedFields.forEach((field) => {
+    for (const field of allowedFields) {
       if (req.body[field] !== undefined) {
         updates[field] = req.body[field];
       }
-    });
+    }
+
+    if (updates.category !== undefined) {
+      updates.category = await assertValidCategory(updates.category);
+    }
 
     const product = await Product.findByIdAndUpdate(req.params.id, updates, {
       new: true,
@@ -131,6 +160,9 @@ const updateProduct = async (req, res, next) => {
 
     res.json({ success: true, data: product });
   } catch (error) {
+    if (error.statusCode) {
+      return res.status(error.statusCode).json({ success: false, message: error.message });
+    }
     if (error.name === 'CastError') {
       return res.status(400).json({ success: false, message: 'Invalid product id' });
     }

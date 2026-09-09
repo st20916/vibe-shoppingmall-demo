@@ -1,7 +1,5 @@
 const mongoose = require('mongoose');
 
-const PRODUCT_CATEGORIES = ['상의', '하의', '악세서리'];
-
 const productSchema = new mongoose.Schema(
   {
     product_id: {
@@ -23,10 +21,7 @@ const productSchema = new mongoose.Schema(
     category: {
       type: String,
       required: [true, 'category is required'],
-      enum: {
-        values: PRODUCT_CATEGORIES,
-        message: 'category must be 상의, 하의, or 악세서리',
-      },
+      trim: true,
     },
     image: {
       type: String,

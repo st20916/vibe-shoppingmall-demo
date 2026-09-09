@@ -5,6 +5,8 @@ import Login from './pages/Login/Login';
 import Admin from './pages/Admin/Admin';
 import ProductManage from './pages/Admin/ProductManage/ProductManage';
 import OrderManage from './pages/Admin/OrderManage/OrderManage';
+import MemberManage from './pages/Admin/MemberManage/MemberManage';
+import CategoryManage from './pages/Admin/CategoryManage/CategoryManage';
 import ProductDetail from './pages/ProductDetail/ProductDetail';
 import Cart from './pages/Cart/Cart';
 import Order from './pages/Order/Order';
@@ -29,6 +31,8 @@ function App() {
         <Route path="/admin" element={<Admin />} />
         <Route path="/admin/products" element={<ProductManage />} />
         <Route path="/admin/orders" element={<OrderManage />} />
+        <Route path="/admin/members" element={<MemberManage />} />
+        <Route path="/admin/categories" element={<CategoryManage />} />
       </Routes>
     </BrowserRouter>
   );

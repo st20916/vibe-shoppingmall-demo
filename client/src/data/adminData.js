@@ -10,12 +10,16 @@ export const ADMIN_MENU = [
     items: [
       { label: '상품 목록', to: '/admin/products' },
       '재고 관리',
-      '카테고리 관리',
+      { label: '카테고리 관리', to: '/admin/categories' },
     ],
   },
   {
     title: '회원 관리',
-    items: ['회원 목록', '등급/권한 관리', '리뷰 관리'],
+    items: [
+      { label: '회원 목록', to: '/admin/members' },
+      '등급/권한 관리',
+      '리뷰 관리',
+    ],
   },
   {
     title: '혜택 관리',
