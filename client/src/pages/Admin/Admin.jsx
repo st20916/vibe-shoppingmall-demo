@@ -1,5 +1,6 @@
 import { useEffect, useMemo, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
+import { getAdminOrderCounts } from '../../api/orderApi';
 import { getProducts } from '../../api/productApi';
 import { getUserCount } from '../../api/userApi';
 import { ADMIN_STATS } from '../../data/adminData';
@@ -20,6 +21,8 @@ function Admin() {
   const [productsError, setProductsError] = useState('');
   const [memberCount, setMemberCount] = useState(null);
   const [isFetchingMemberCount, setIsFetchingMemberCount] = useState(true);
+  const [pendingOrderCount, setPendingOrderCount] = useState(null);
+  const [isFetchingPendingOrders, setIsFetchingPendingOrders] = useState(true);
 
   useEffect(() => {
     if (isLoading) return;
@@ -75,8 +78,28 @@ function Admin() {
       }
     };
 
+    const fetchPendingOrderCount = async () => {
+      setIsFetchingPendingOrders(true);
+
+      try {
+        const result = await getAdminOrderCounts();
+        if (!cancelled) {
+          setPendingOrderCount(Number(result.data?.counts?.pending) || 0);
+        }
+      } catch {
+        if (!cancelled) {
+          setPendingOrderCount(null);
+        }
+      } finally {
+        if (!cancelled) {
+          setIsFetchingPendingOrders(false);
+        }
+      }
+    };
+
     fetchRecentProducts();
     fetchMemberCount();
+    fetchPendingOrderCount();
 
     return () => {
       cancelled = true;
@@ -86,18 +109,36 @@ function Admin() {
   const profileStats = useMemo(
     () =>
       ADMIN_STATS.map((stat) => {
-        if (stat.label !== '회원 수') return stat;
+        if (stat.label === '회원 수') {
+          return {
+            ...stat,
+            value: isFetchingMemberCount
+              ? '...'
+              : memberCount === null
+                ? '-'
+                : memberCount.toLocaleString(),
+          };
+        }
 
-        return {
-          ...stat,
-          value: isFetchingMemberCount
-            ? '...'
-            : memberCount === null
-              ? '-'
-              : memberCount.toLocaleString(),
-        };
+        if (stat.label === '대기 주문') {
+          return {
+            ...stat,
+            value: isFetchingPendingOrders
+              ? '...'
+              : pendingOrderCount === null
+                ? '-'
+                : pendingOrderCount.toLocaleString(),
+          };
+        }
+
+        return stat;
       }),
-    [isFetchingMemberCount, memberCount]
+    [
+      isFetchingMemberCount,
+      memberCount,
+      isFetchingPendingOrders,
+      pendingOrderCount,
+    ]
   );
 
   if (isLoading || !user || !isAdmin) {

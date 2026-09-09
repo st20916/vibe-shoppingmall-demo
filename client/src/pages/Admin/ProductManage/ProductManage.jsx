@@ -6,7 +6,7 @@ import {
   getProducts,
   updateProduct,
 } from '../../../api/productApi';
-import { PRODUCT_CATEGORIES } from '../../../data/productData';
+import { getCategories } from '../../../api/categoryApi';
 import { useAuth } from '../../../hooks/useAuth';
 import { openCloudinaryUploadWidget } from '../../../utils/cloudinary';
 import AdminHeader from '../AdminHeader';
@@ -19,7 +19,7 @@ const INITIAL_FORM = {
   product_id: '',
   name: '',
   price: '',
-  category: '상의',
+  category: '',
   image: '',
   description: '',
 };
@@ -39,7 +39,7 @@ const toFormValues = (product) => ({
   product_id: product.product_id || '',
   name: product.name || '',
   price: product.price === undefined || product.price === null ? '' : String(product.price),
-  category: product.category || '상의',
+  category: product.category || '',
   image: product.image || '',
   description: product.description || '',
 });
@@ -61,6 +61,7 @@ function ProductManage() {
   const [searchQuery, setSearchQuery] = useState('');
   const [appliedQuery, setAppliedQuery] = useState('');
   const [categoryFilter, setCategoryFilter] = useState('전체');
+  const [categories, setCategories] = useState([]);
   const [form, setForm] = useState(INITIAL_FORM);
   const [imageMeta, setImageMeta] = useState({ publicId: '', originalFilename: '' });
   const [error, setError] = useState('');
@@ -104,8 +105,44 @@ function ProductManage() {
     fetchProducts();
   }, [user, isAdmin, fetchProducts]);
 
+  useEffect(() => {
+    if (!user || !isAdmin) return undefined;
+
+    let cancelled = false;
+
+    const loadCategories = async () => {
+      try {
+        const result = await getCategories();
+        if (cancelled) return;
+
+        const names = (Array.isArray(result.data) ? result.data : [])
+          .map((item) => item.name)
+          .filter(Boolean);
+
+        setCategories(names);
+        setForm((prev) => {
+          if (prev.category && names.includes(prev.category)) return prev;
+          return { ...prev, category: names[0] || '' };
+        });
+      } catch {
+        if (!cancelled) {
+          setCategories([]);
+        }
+      }
+    };
+
+    loadCategories();
+
+    return () => {
+      cancelled = true;
+    };
+  }, [user, isAdmin]);
+
   const resetFormState = () => {
-    setForm(INITIAL_FORM);
+    setForm({
+      ...INITIAL_FORM,
+      category: categories[0] || '',
+    });
     setImageMeta({ publicId: '', originalFilename: '' });
     setEditingId(null);
   };
@@ -388,7 +425,7 @@ function ProductManage() {
                     onChange={handleCategoryChange}
                   >
                     <option value="전체">전체</option>
-                    {PRODUCT_CATEGORIES.map((category) => (
+                    {categories.map((category) => (
                       <option key={category} value={category}>
                         {category}
                       </option>
@@ -543,11 +580,15 @@ function ProductManage() {
                   <label>
                     상품 카테고리 *
                     <select value={form.category} onChange={handleChange('category')}>
-                      {PRODUCT_CATEGORIES.map((category) => (
-                        <option key={category} value={category}>
-                          {category}
-                        </option>
-                      ))}
+                      {categories.length === 0 ? (
+                        <option value="">카테고리를 불러오는 중...</option>
+                      ) : (
+                        categories.map((category) => (
+                          <option key={category} value={category}>
+                            {category}
+                          </option>
+                        ))
+                      )}
                     </select>
                   </label>
                   <div className="product-manage__full product-manage__image-field">

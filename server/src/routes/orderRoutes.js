@@ -3,6 +3,7 @@ const authMiddleware = require('../middleware/authMiddleware');
 const {
   getOrders,
   getAdminOrders,
+  getAdminOrderCounts,
   getOrderById,
   createOrder,
   updateOrder,
@@ -14,6 +15,7 @@ const router = express.Router();
 router.use(authMiddleware);
 
 router.get('/', getOrders);
+router.get('/admin/counts', getAdminOrderCounts);
 router.get('/admin', getAdminOrders);
 router.get('/:id', getOrderById);
 router.post('/', createOrder);

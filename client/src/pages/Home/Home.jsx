@@ -1,7 +1,7 @@
 import { useEffect, useMemo, useState } from 'react';
+import { getCategories } from '../../api/categoryApi';
 import { getPublicProducts } from '../../api/productApi';
 import { HERO_BANNERS, NEW_ARRIVALS_LIMIT } from '../../data/homeData';
-import { PRODUCT_CATEGORIES } from '../../data/productData';
 import { useAuth } from '../../hooks/useAuth';
 import HeroBanner from './HeroBanner';
 import HomeFooter from './HomeFooter';
@@ -20,7 +20,8 @@ const toCardProduct = (product, { isNew = false } = {}) => ({
 
 function Home() {
   const { user, isAdmin, logout } = useAuth();
-  const [activeHotTab, setActiveHotTab] = useState(PRODUCT_CATEGORIES[0]);
+  const [categories, setCategories] = useState([]);
+  const [activeHotTab, setActiveHotTab] = useState('');
   const [products, setProducts] = useState([]);
   const [isFetching, setIsFetching] = useState(true);
   const [error, setError] = useState('');
@@ -28,19 +29,35 @@ function Home() {
   useEffect(() => {
     let cancelled = false;
 
-    const fetchProducts = async () => {
+    const fetchHomeData = async () => {
       setIsFetching(true);
       setError('');
 
       try {
-        const result = await getPublicProducts();
-        if (!cancelled) {
-          setProducts(result.data || []);
-        }
+        const [productsResult, categoriesResult] = await Promise.all([
+          getPublicProducts(),
+          getCategories(),
+        ]);
+
+        if (cancelled) return;
+
+        const nextProducts = productsResult.data || [];
+        const nextCategories = (Array.isArray(categoriesResult.data) ? categoriesResult.data : [])
+          .map((item) => item.name)
+          .filter(Boolean);
+
+        setProducts(nextProducts);
+        setCategories(nextCategories);
+        setActiveHotTab((prev) => {
+          if (prev && nextCategories.includes(prev)) return prev;
+          return nextCategories[0] || '';
+        });
       } catch (err) {
         if (!cancelled) {
           setError(err.message || '상품을 불러오지 못했습니다.');
           setProducts([]);
+          setCategories([]);
+          setActiveHotTab('');
         }
       } finally {
         if (!cancelled) {
@@ -49,7 +66,7 @@ function Home() {
       }
     };
 
-    fetchProducts();
+    fetchHomeData();
 
     return () => {
       cancelled = true;
@@ -57,6 +74,8 @@ function Home() {
   }, []);
 
   const hotPickProducts = useMemo(() => {
+    if (!activeHotTab) return [];
+
     return products
       .filter((product) => product.category === activeHotTab)
       .map((product) => toCardProduct(product));
@@ -98,11 +117,15 @@ function Home() {
               id="best"
               title="Hot Pick"
               moreHref="#best"
-              tabs={PRODUCT_CATEGORIES}
+              tabs={categories}
               activeTab={activeHotTab}
               onTabChange={setActiveHotTab}
               products={hotPickProducts}
-              emptyMessage={`${activeHotTab} 카테고리 상품이 없습니다.`}
+              emptyMessage={
+                activeHotTab
+                  ? `${activeHotTab} 카테고리 상품이 없습니다.`
+                  : '표시할 카테고리가 없습니다.'
+              }
             />
 
             <ProductSection

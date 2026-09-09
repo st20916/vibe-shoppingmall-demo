@@ -130,6 +130,47 @@ const getAdminOrders = async (req, res, next) => {
   }
 };
 
+// GET /api/orders/admin/counts — 관리자 주문 상태별 개수
+const getAdminOrderCounts = async (req, res, next) => {
+  try {
+    if (req.user.user_type !== 'admin') {
+      return res.status(403).json({ success: false, message: 'Access denied' });
+    }
+
+    const grouped = await Order.aggregate([
+      {
+        $group: {
+          _id: '$status',
+          count: { $sum: 1 },
+        },
+      },
+    ]);
+
+    const counts = ORDER_STATUS.reduce((acc, status) => {
+      acc[status] = 0;
+      return acc;
+    }, {});
+
+    grouped.forEach((row) => {
+      if (Object.prototype.hasOwnProperty.call(counts, row._id)) {
+        counts[row._id] = row.count;
+      }
+    });
+
+    const total = Object.values(counts).reduce((sum, count) => sum + count, 0);
+
+    res.json({
+      success: true,
+      data: {
+        total,
+        counts,
+      },
+    });
+  } catch (error) {
+    next(error);
+  }
+};
+
 // GET /api/orders/:id — 주문 상세 (본인 주문만)
 const getOrderById = async (req, res, next) => {
   try {
@@ -373,6 +414,7 @@ const deleteOrder = async (req, res, next) => {
 module.exports = {
   getOrders,
   getAdminOrders,
+  getAdminOrderCounts,
   getOrderById,
   createOrder,
   updateOrder,

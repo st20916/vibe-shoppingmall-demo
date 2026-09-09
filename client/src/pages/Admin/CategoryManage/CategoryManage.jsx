@@ -359,14 +359,14 @@ function CategoryManage() {
                             <div className="category-manage__row-actions">
                               <button
                                 type="button"
-                                className="category-manage__link-btn"
+                                className="category-manage__action-btn category-manage__action-btn--edit"
                                 onClick={() => handleEdit(category)}
                               >
                                 수정
                               </button>
                               <button
                                 type="button"
-                                className="category-manage__link-btn category-manage__link-btn--danger"
+                                className="category-manage__action-btn category-manage__action-btn--delete"
                                 onClick={() => openDeleteModal(category)}
                                 disabled={protectedItem}
                                 title={

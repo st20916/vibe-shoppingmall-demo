@@ -91,6 +91,8 @@ export const getAdminOrders = async ({ status } = {}) => {
   return request(query ? `${API_BASE_URL}/admin?${query}` : `${API_BASE_URL}/admin`);
 };
 
+export const getAdminOrderCounts = async () => request(`${API_BASE_URL}/admin/counts`);
+
 export const getOrderById = async (id) => request(`${API_BASE_URL}/${id}`);
 
 export const createOrder = async ({ imp_uid, merchant_uid }, accessToken) => {

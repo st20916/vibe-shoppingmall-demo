@@ -51,6 +51,7 @@ npm run dev
 
 | 날짜 | 영역 | 내용 |
 |------|------|------|
+| 2026-09-09 | client/server | Admin 주문 상태별 개수 API + 대시보드 대기 주문 연동 |
 | 2026-09-09 | client | Admin 카테고리 관리 페이지(`/admin/categories`) CRUD·삭제 모달 |
 | 2026-09-09 | server | Category CRUD (`/api/categories`, 기본 3개 삭제 불가) |
 | 2026-09-09 | client | Admin 회원 목록 페이지(`/admin/members`) + 사이드바 연동 |
