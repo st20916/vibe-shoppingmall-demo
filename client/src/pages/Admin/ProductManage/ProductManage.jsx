@@ -21,6 +21,7 @@ const INITIAL_FORM = {
   price: '',
   category: '',
   image: '',
+  detailImage: '',
   description: '',
 };
 
@@ -41,6 +42,7 @@ const toFormValues = (product) => ({
   price: product.price === undefined || product.price === null ? '' : String(product.price),
   category: product.category || '',
   image: product.image || '',
+  detailImage: product.detailImage || '',
   description: product.description || '',
 });
 
@@ -58,12 +60,17 @@ function ProductManage() {
   const [isFetching, setIsFetching] = useState(true);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isUploadingImage, setIsUploadingImage] = useState(false);
+  const [isUploadingDetailImage, setIsUploadingDetailImage] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
   const [appliedQuery, setAppliedQuery] = useState('');
   const [categoryFilter, setCategoryFilter] = useState('전체');
   const [categories, setCategories] = useState([]);
   const [form, setForm] = useState(INITIAL_FORM);
   const [imageMeta, setImageMeta] = useState({ publicId: '', originalFilename: '' });
+  const [detailImageMeta, setDetailImageMeta] = useState({
+    publicId: '',
+    originalFilename: '',
+  });
   const [error, setError] = useState('');
   const [deleteTarget, setDeleteTarget] = useState(null);
   const [isDeleting, setIsDeleting] = useState(false);
@@ -144,6 +151,7 @@ function ProductManage() {
       category: categories[0] || '',
     });
     setImageMeta({ publicId: '', originalFilename: '' });
+    setDetailImageMeta({ publicId: '', originalFilename: '' });
     setEditingId(null);
   };
 
@@ -214,9 +222,39 @@ function ProductManage() {
     }
   };
 
+  const handleOpenDetailCloudinary = async () => {
+    setError('');
+    setIsUploadingDetailImage(true);
+
+    try {
+      await openCloudinaryUploadWidget({
+        onSuccess: (info) => {
+          setForm((prev) => ({ ...prev, detailImage: info.secure_url }));
+          setDetailImageMeta({
+            publicId: info.public_id || '',
+            originalFilename: info.original_filename || '',
+          });
+          setError('');
+        },
+        onError: () => {
+          setError('상세 설명 이미지 업로드에 실패했습니다.');
+        },
+      });
+    } catch (err) {
+      setError(err.message || 'Cloudinary 위젯을 열 수 없습니다.');
+    } finally {
+      setIsUploadingDetailImage(false);
+    }
+  };
+
   const handleClearImage = () => {
     setForm((prev) => ({ ...prev, image: '' }));
     setImageMeta({ publicId: '', originalFilename: '' });
+  };
+
+  const handleClearDetailImage = () => {
+    setForm((prev) => ({ ...prev, detailImage: '' }));
+    setDetailImageMeta({ publicId: '', originalFilename: '' });
   };
 
   const handleSubmit = async (event) => {
@@ -237,6 +275,7 @@ function ProductManage() {
       price: Number(form.price),
       category: form.category,
       image: form.image.trim(),
+      detailImage: form.detailImage.trim(),
       description: form.description.trim() || undefined,
     };
 
@@ -624,6 +663,41 @@ function ProductManage() {
                       </p>
                     )}
                   </div>
+                  <div className="product-manage__full product-manage__image-field">
+                    <span className="product-manage__label">상품 상세 설명 이미지</span>
+                    <div className="product-manage__image-actions">
+                      <button
+                        type="button"
+                        className="product-manage__file-btn"
+                        onClick={handleOpenDetailCloudinary}
+                        disabled={isUploadingDetailImage}
+                      >
+                        {isUploadingDetailImage
+                          ? '위젯 준비 중...'
+                          : 'Cloudinary로 상세 이미지 업로드'}
+                      </button>
+                      {form.detailImage && (
+                        <button
+                          type="button"
+                          className="product-manage__secondary-btn product-manage__clear-image"
+                          onClick={handleClearDetailImage}
+                        >
+                          이미지 제거
+                        </button>
+                      )}
+                    </div>
+                    {detailImageMeta.originalFilename && (
+                      <p className="product-manage__file-name">
+                        업로드됨: {detailImageMeta.originalFilename}
+                        {detailImageMeta.publicId ? ` (${detailImageMeta.publicId})` : ''}
+                      </p>
+                    )}
+                    {form.detailImage && (
+                      <p className="product-manage__file-name product-manage__file-url">
+                        URL: {form.detailImage}
+                      </p>
+                    )}
+                  </div>
                   <label className="product-manage__full">
                     상품 설명
                     <textarea
@@ -636,11 +710,21 @@ function ProductManage() {
                 </div>
 
                 <div className="product-manage__preview">
-                  <p>이미지 미리보기</p>
+                  <p>대표 이미지 미리보기</p>
                   {form.image ? (
                     <img
                       src={form.image}
                       alt="상품 미리보기"
+                      className="product-manage__preview-img"
+                    />
+                  ) : (
+                    <div className="product-manage__preview-box" aria-hidden="true" />
+                  )}
+                  <p className="product-manage__preview-sub">상세 설명 이미지 미리보기</p>
+                  {form.detailImage ? (
+                    <img
+                      src={form.detailImage}
+                      alt="상세 설명 미리보기"
                       className="product-manage__preview-img"
                     />
                   ) : (

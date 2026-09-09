@@ -28,6 +28,11 @@ const productSchema = new mongoose.Schema(
       required: [true, 'image is required'],
       trim: true,
     },
+    detailImage: {
+      type: String,
+      trim: true,
+      default: '',
+    },
     description: {
       type: String,
       trim: true,

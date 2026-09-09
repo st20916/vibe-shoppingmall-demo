@@ -106,7 +106,7 @@ const getProductById = async (req, res, next) => {
 // POST /api/products — 상품 등록
 const createProduct = async (req, res, next) => {
   try {
-    const { product_id, name, price, category, image, description } = req.body;
+    const { product_id, name, price, category, image, detailImage, description } = req.body;
     const validCategory = await assertValidCategory(category);
 
     const product = await Product.create({
@@ -115,6 +115,8 @@ const createProduct = async (req, res, next) => {
       price,
       category: validCategory,
       image,
+      detailImage:
+        typeof detailImage === 'string' && detailImage.trim() ? detailImage.trim() : '',
       description,
     });
 
@@ -136,7 +138,15 @@ const createProduct = async (req, res, next) => {
 // PUT /api/products/:id — 상품 수정 (요청 body에 포함된 필드만 부분 수정)
 const updateProduct = async (req, res, next) => {
   try {
-    const allowedFields = ['product_id', 'name', 'price', 'category', 'image', 'description'];
+    const allowedFields = [
+      'product_id',
+      'name',
+      'price',
+      'category',
+      'image',
+      'detailImage',
+      'description',
+    ];
     const updates = {};
 
     for (const field of allowedFields) {
@@ -147,6 +157,13 @@ const updateProduct = async (req, res, next) => {
 
     if (updates.category !== undefined) {
       updates.category = await assertValidCategory(updates.category);
+    }
+
+    if (updates.detailImage !== undefined) {
+      updates.detailImage =
+        typeof updates.detailImage === 'string' && updates.detailImage.trim()
+          ? updates.detailImage.trim()
+          : '';
     }
 
     const product = await Product.findByIdAndUpdate(req.params.id, updates, {
@@ -224,7 +241,7 @@ const deleteProduct = async (req, res, next) => {
 const getPublicProducts = async (req, res, next) => {
   try {
     const products = await Product.find()
-      .select('-product_id -description')
+      .select('-product_id -description -detailImage')
       .sort({ createdAt: -1 });
 
     res.json({ success: true, data: products });

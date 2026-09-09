@@ -79,11 +79,11 @@ function ProductDetail() {
 
   const gallery = useMemo(() => {
     if (!product?.image) return [];
-    return [
-      { id: 'main', src: product.image, label: '대표' },
-      { id: 'detail', src: product.image, label: '상세' },
-      { id: 'side', src: product.image, label: '구성' },
-    ];
+    const items = [{ id: 'main', src: product.image, label: '대표' }];
+    if (product.detailImage) {
+      items.push({ id: 'detail', src: product.detailImage, label: '상세' });
+    }
+    return items;
   }, [product]);
 
   const specs = useMemo(() => (product ? buildProductSpecs(product) : []), [product]);
@@ -328,7 +328,11 @@ function ProductDetail() {
         </div>
 
         <div className="pd-desc">
-          <img src={product.image} alt="" className="pd-desc__image" />
+          <img
+            src={product.detailImage || product.image}
+            alt=""
+            className="pd-desc__image"
+          />
           <div className="pd-desc__text">
             {product.description?.trim() ? (
               product.description.split('\n').map((line, index) => (

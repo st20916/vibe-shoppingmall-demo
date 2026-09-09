@@ -4,7 +4,7 @@ export const HERO_BANNERS = [
   {
     id: 1,
     image:
-      'https://images.unsplash.com/photo-1617137968427-85924c800a22?auto=format&fit=crop&w=600&q=80',
+      'https://bmbx-prd.my.commercecloud.salesforce.com/on/demandware.static/-/Sites-wackywilly_kr-Library/default/CAMPAIGN/Woni-day/woni_001_1st.jpg',
     alt: '남성 패션',
   },
   {

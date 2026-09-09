@@ -411,6 +411,10 @@
   color: #333;
 }
 
+.product-manage__preview-sub {
+  margin-top: 16px !important;
+}
+
 .product-manage__preview-box {
   width: 160px;
   aspect-ratio: 1;
@@ -424,6 +428,7 @@
   object-fit: cover;
   border: 1px solid #eee;
   display: block;
+  margin-bottom: 4px;
 }
 
 .product-manage__error {
