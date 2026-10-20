@@ -38,14 +38,12 @@ const assertValidCategory = async (categoryName) => {
   return name;
 };
 
-// GET /api/products — 전체 상품 조회 (페이지네이션: 기본 10개)
-// Query: page(기본 1), limit(기본 10), category(선택), q(선택: name/product_id 검색)
+// GET /api/products — 전체 상품 조회
+// Query: category(선택), q(선택: name/product_id 검색)
+//        page, limit(선택) — 둘 중 하나라도 있으면 페이지네이션 적용(기본 page=1, limit=10), 없으면 전체 목록 반환
+// 전체 상품 개수(total)는 페이지네이션 여부와 관계없이 항상 조회한다.
 const getAllProducts = async (req, res, next) => {
   try {
-    const page = Math.max(1, parseInt(req.query.page, 10) || 1);
-    const limit = Math.min(100, Math.max(1, parseInt(req.query.limit, 10) || 10));
-    const skip = (page - 1) * limit;
-
     const filter = {};
 
     if (req.query.category) {
@@ -61,11 +59,32 @@ const getAllProducts = async (req, res, next) => {
       ];
     }
 
-    const [products, total] = await Promise.all([
-      Product.find(filter).sort({ createdAt: -1 }).skip(skip).limit(limit),
-      Product.countDocuments(filter),
-    ]);
+    const query = Product.find(filter).sort({ createdAt: -1 });
+    const total = await Product.countDocuments(filter);
 
+    const hasPagination = req.query.page !== undefined || req.query.limit !== undefined;
+
+    if (!hasPagination) {
+      const products = await query;
+      return res.json({
+        success: true,
+        data: products,
+        pagination: {
+          page: 1,
+          limit: total,
+          total,
+          totalPages: 1,
+          hasNextPage: false,
+          hasPrevPage: false,
+        },
+      });
+    }
+
+    const page = Math.max(1, parseInt(req.query.page, 10) || 1);
+    const limit = Math.min(100, Math.max(1, parseInt(req.query.limit, 10) || 10));
+    const skip = (page - 1) * limit;
+
+    const products = await query.skip(skip).limit(limit);
     const totalPages = Math.max(1, Math.ceil(total / limit));
 
     res.json({
@@ -237,14 +256,51 @@ const deleteProduct = async (req, res, next) => {
   }
 };
 
-// GET /api/products/public — 메인용 전체 상품 조회 (product_id, description 제외)
+// GET /api/products/public — 전체 상품 조회 (product_id, description 제외)
+// Query: category(선택) — 카테고리 필터
+//        page, limit(선택) — 둘 중 하나라도 있으면 페이지네이션 적용, 없으면 전체 목록 반환
 const getPublicProducts = async (req, res, next) => {
   try {
-    const products = await Product.find()
+    const filter = {};
+
+    if (req.query.category) {
+      filter.category = String(req.query.category).trim();
+    }
+
+    const query = Product.find(filter)
       .select('-product_id -description -detailImage')
       .sort({ createdAt: -1 });
 
-    res.json({ success: true, data: products });
+    const hasPagination = req.query.page !== undefined || req.query.limit !== undefined;
+
+    if (!hasPagination) {
+      const products = await query;
+      return res.json({ success: true, data: products });
+    }
+
+    const page = Math.max(1, parseInt(req.query.page, 10) || 1);
+    const limit = Math.min(100, Math.max(1, parseInt(req.query.limit, 10) || 10));
+    const skip = (page - 1) * limit;
+
+    const [products, total] = await Promise.all([
+      query.skip(skip).limit(limit),
+      Product.countDocuments(filter),
+    ]);
+
+    const totalPages = Math.max(1, Math.ceil(total / limit));
+
+    res.json({
+      success: true,
+      data: products,
+      pagination: {
+        page,
+        limit,
+        total,
+        totalPages,
+        hasNextPage: page < totalPages,
+        hasPrevPage: page > 1,
+      },
+    });
   } catch (error) {
     next(error);
   }

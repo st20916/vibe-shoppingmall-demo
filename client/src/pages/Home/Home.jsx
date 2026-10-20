@@ -116,7 +116,7 @@ function Home() {
             <ProductSection
               id="best"
               title="Hot Pick"
-              moreHref="#best"
+              moreHref={`/products${activeHotTab ? `?category=${encodeURIComponent(activeHotTab)}` : ''}`}
               tabs={categories}
               activeTab={activeHotTab}
               onTabChange={setActiveHotTab}
@@ -131,7 +131,7 @@ function Home() {
             <ProductSection
               id="new"
               title="New Arrivals"
-              moreHref="#new"
+              moreHref="/products"
               products={newArrivals}
               emptyMessage="등록된 상품이 없습니다."
             />

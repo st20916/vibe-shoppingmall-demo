@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom';
 import ProductCard from './ProductCard';
 
 function ProductSection({
@@ -14,9 +15,9 @@ function ProductSection({
     <section className="home-section" id={id}>
       <div className="home-section__header">
         <h2 className="home-section__title">{title}</h2>
-        <a href={moreHref} className="home-section__more">
+        <Link to={moreHref} className="home-section__more">
           View All
-        </a>
+        </Link>
       </div>
 
       {tabs && (

@@ -17,8 +17,8 @@ export const ADMIN_MENU = [
     title: '회원 관리',
     items: [
       { label: '회원 목록', to: '/admin/members' },
-      '등급/권한 관리',
-      '리뷰 관리',
+      { label: '등급/권한 관리', to: '/admin/grade'},
+      { label: '리뷰 관리', to: '/admin/review'},
     ],
   },
   {

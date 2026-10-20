@@ -56,8 +56,18 @@ export const getProducts = async ({ page = 1, limit = 10, category, q } = {}) =>
   return request(`${API_BASE_URL}?${params.toString()}`);
 };
 
-/** 메인 페이지용: 전체 상품 (product_id, description 제외) */
-export const getPublicProducts = async () => request(`${API_BASE_URL}/public`);
+/**
+ * 전체 상품 조회 (product_id, description 제외).
+ * category 지정 시 필터링. page/limit 지정 시 페이지네이션 적용, 미지정 시 전체 목록 반환.
+ */
+export const getPublicProducts = async ({ category, page, limit } = {}) => {
+  const params = new URLSearchParams();
+  if (category) params.set('category', category);
+  if (page !== undefined) params.set('page', String(page));
+  if (limit !== undefined) params.set('limit', String(limit));
+  const query = params.toString();
+  return request(`${API_BASE_URL}/public${query ? `?${query}` : ''}`);
+};
 
 /** 상품 상세 조회 (MongoDB _id) */
 export const getProductById = async (id) => request(`${API_BASE_URL}/${id}`);

@@ -1,5 +1,6 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import Home from './pages/Home/Home';
+import AllProducts from './pages/Products/AllProducts';
 import SignUp from './pages/SignUp/SignUp';
 import Login from './pages/Login/Login';
 import Admin from './pages/Admin/Admin';
@@ -7,6 +8,7 @@ import ProductManage from './pages/Admin/ProductManage/ProductManage';
 import OrderManage from './pages/Admin/OrderManage/OrderManage';
 import MemberManage from './pages/Admin/MemberManage/MemberManage';
 import CategoryManage from './pages/Admin/CategoryManage/CategoryManage';
+import RoleManage from './pages/Admin/RoleManage/RoleManage';
 import ProductDetail from './pages/ProductDetail/ProductDetail';
 import Cart from './pages/Cart/Cart';
 import Order from './pages/Order/Order';
@@ -20,6 +22,7 @@ function App() {
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<Home />} />
+        <Route path="/products" element={<AllProducts />} />
         <Route path="/products/:id" element={<ProductDetail />} />
         <Route path="/cart" element={<Cart />} />
         <Route path="/order" element={<Order />} />
@@ -33,6 +36,7 @@ function App() {
         <Route path="/admin/orders" element={<OrderManage />} />
         <Route path="/admin/members" element={<MemberManage />} />
         <Route path="/admin/categories" element={<CategoryManage />} />
+        <Route path="/admin/grade" element={<RoleManage />} />
       </Routes>
     </BrowserRouter>
   );

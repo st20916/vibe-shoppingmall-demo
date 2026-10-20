@@ -47,3 +47,10 @@ export const createUser = async (userData) =>
     method: 'POST',
     body: JSON.stringify(userData),
   });
+
+// PUT /api/users/:id — 사용자 정보 수정 (등급/권한 변경 등 부분 수정)
+export const updateUser = async (id, userData) =>
+  request(`${API_BASE_URL}/${id}`, {
+    method: 'PUT',
+    body: JSON.stringify(userData),
+  });

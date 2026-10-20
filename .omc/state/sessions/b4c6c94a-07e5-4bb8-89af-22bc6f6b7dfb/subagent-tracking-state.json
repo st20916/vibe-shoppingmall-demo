@@ -1,0 +1,28 @@
+{
+  "agents": [
+    {
+      "agent_id": "a425d6e8aa7038564",
+      "agent_type": "Explore",
+      "started_at": "2026-10-20T08:16:18.320Z",
+      "parent_mode": "none",
+      "status": "completed",
+      "completed_at": "2026-10-20T08:16:43.740Z",
+      "duration_ms": 25420
+    },
+    {
+      "agent_id": "a49ec71bdbaf91a7e",
+      "agent_type": "untracked-native-fork",
+      "started_at": "2026-10-20T08:20:04.245Z",
+      "parent_mode": "none",
+      "status": "completed",
+      "completed_at": "2026-10-20T08:20:04.245Z",
+      "synthetic": true,
+      "telemetry_status": "unmatched_stop",
+      "telemetry_note": "SubagentStop arrived without a matching SubagentStart; native Agent/Task start telemetry was not observed."
+    }
+  ],
+  "total_spawned": 1,
+  "total_completed": 2,
+  "total_failed": 0,
+  "last_updated": "2026-10-20T08:20:04.260Z"
+}
