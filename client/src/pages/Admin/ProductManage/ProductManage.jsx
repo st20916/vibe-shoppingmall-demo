@@ -75,9 +75,46 @@ function ProductManage() {
   const [deleteTarget, setDeleteTarget] = useState(null);
   const [isDeleting, setIsDeleting] = useState(false);
   const [deleteError, setDeleteError] = useState('');
+  const [leaveConfirm, setLeaveConfirm] = useState(null);
 
   const isEditing = Boolean(editingId);
   const isFormTab = activeTab === 'register' || activeTab === 'edit';
+
+  const hasUnsavedInput = Boolean(
+    form.product_id.trim() ||
+      form.name.trim() ||
+      form.price !== '' ||
+      form.image.trim() ||
+      form.detailImage.trim() ||
+      form.description.trim()
+  );
+
+  const isRequiredIncomplete = !(
+    form.product_id.trim() &&
+    form.name.trim() &&
+    form.price !== '' &&
+    Number(form.price) >= 0 &&
+    form.category &&
+    form.image.trim()
+  );
+
+  const needsLeaveConfirm = isFormTab && hasUnsavedInput && isRequiredIncomplete;
+
+  const attemptLeave = (action) => {
+    if (needsLeaveConfirm) {
+      setLeaveConfirm({ run: action });
+      return;
+    }
+    action();
+  };
+
+  const closeLeaveConfirm = () => setLeaveConfirm(null);
+
+  const confirmLeave = () => {
+    const action = leaveConfirm?.run;
+    setLeaveConfirm(null);
+    action?.();
+  };
 
   useEffect(() => {
     if (isLoading) return;
@@ -369,6 +406,19 @@ function ProductManage() {
     return () => window.removeEventListener('keydown', onKeyDown);
   }, [deleteTarget, isDeleting]);
 
+  useEffect(() => {
+    if (!leaveConfirm) return undefined;
+
+    const onKeyDown = (event) => {
+      if (event.key === 'Escape') {
+        closeLeaveConfirm();
+      }
+    };
+
+    window.addEventListener('keydown', onKeyDown);
+    return () => window.removeEventListener('keydown', onKeyDown);
+  }, [leaveConfirm]);
+
   if (isLoading || !user || !isAdmin) {
     return (
       <div className="admin-page admin-page--loading">
@@ -414,7 +464,7 @@ function ProductManage() {
               role="tab"
               aria-selected={activeTab === 'list'}
               className={`product-manage__tab${activeTab === 'list' ? ' is-active' : ''}`}
-              onClick={() => handleTabChange('list')}
+              onClick={() => attemptLeave(() => handleTabChange('list'))}
             >
               상품 목록
             </button>
@@ -738,7 +788,7 @@ function ProductManage() {
                   <button
                     type="button"
                     className="product-manage__secondary-btn"
-                    onClick={() => handleTabChange('list')}
+                    onClick={() => attemptLeave(() => handleTabChange('list'))}
                   >
                     목록으로
                   </button>
@@ -761,7 +811,17 @@ function ProductManage() {
           )}
 
           <div className="product-manage__back">
-            <Link to="/admin">← Admin 대시보드로</Link>
+            <Link
+              to="/admin"
+              onClick={(event) => {
+                if (needsLeaveConfirm) {
+                  event.preventDefault();
+                  attemptLeave(() => navigate('/admin'));
+                }
+              }}
+            >
+              ← Admin 대시보드로
+            </Link>
           </div>
         </main>
       </div>
@@ -823,6 +883,46 @@ function ProductManage() {
                 disabled={isDeleting}
               >
                 {isDeleting ? '삭제 중...' : '삭제하기'}
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {leaveConfirm && (
+        <div
+          className="product-manage__modal-overlay"
+          role="presentation"
+          onClick={closeLeaveConfirm}
+        >
+          <div
+            className="product-manage__modal"
+            role="dialog"
+            aria-modal="true"
+            aria-labelledby="product-leave-title"
+            onClick={(event) => event.stopPropagation()}
+          >
+            <h2 id="product-leave-title" className="product-manage__modal-title">
+              작성 중인 내용이 있습니다
+            </h2>
+            <p className="product-manage__modal-desc">
+              작성 중인 데이터는 삭제됩니다. 그래도 돌아가시겠습니까?
+            </p>
+
+            <div className="product-manage__modal-actions">
+              <button
+                type="button"
+                className="product-manage__secondary-btn"
+                onClick={closeLeaveConfirm}
+              >
+                아니오
+              </button>
+              <button
+                type="button"
+                className="product-manage__danger-btn"
+                onClick={confirmLeave}
+              >
+                예
               </button>
             </div>
           </div>

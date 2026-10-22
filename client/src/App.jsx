@@ -1,6 +1,7 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import Home from './pages/Home/Home';
 import AllProducts from './pages/Products/AllProducts';
+import SearchResults from './pages/Search/SearchResults';
 import SignUp from './pages/SignUp/SignUp';
 import Login from './pages/Login/Login';
 import Admin from './pages/Admin/Admin';
@@ -23,6 +24,7 @@ function App() {
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/products" element={<AllProducts />} />
+        <Route path="/search" element={<SearchResults />} />
         <Route path="/products/:id" element={<ProductDetail />} />
         <Route path="/cart" element={<Cart />} />
         <Route path="/order" element={<Order />} />

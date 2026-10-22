@@ -13,65 +13,74 @@
   width: 100%;
   max-width: 420px;
   padding: 24px;
-  background: #fff;
-  border: 1px solid #eee;
+  background: var(--color-canvas);
+  border: 1px solid var(--color-hairline);
+  border-radius: var(--radius-lg);
   box-shadow: 0 12px 40px rgba(0, 0, 0, 0.12);
 }
 
 .cancel-reason-modal__title {
   margin: 0 0 8px;
+  font-family: var(--font-display);
   font-size: 18px;
-  font-weight: 700;
-  color: #111;
+  font-weight: 600;
+  color: var(--color-ink);
 }
 
 .cancel-reason-modal__desc {
   margin: 0 0 16px;
+  font-family: var(--font-text);
   font-size: 13px;
-  color: #666;
+  color: var(--color-ink-muted-48);
   line-height: 1.5;
 }
 
 .cancel-reason-modal__label {
   display: block;
   margin-bottom: 8px;
+  font-family: var(--font-text);
   font-size: 13px;
   font-weight: 600;
-  color: #333;
+  color: var(--color-ink-muted-80);
 }
 
 .cancel-reason-modal__textarea {
   width: 100%;
   box-sizing: border-box;
   padding: 12px;
-  border: 1px solid #ddd;
+  border: 1px solid var(--color-hairline);
+  border-radius: var(--radius-sm);
   font: inherit;
+  font-family: var(--font-text);
   font-size: 14px;
   line-height: 1.5;
-  color: #111;
+  color: var(--color-ink);
   resize: vertical;
   min-height: 96px;
+  outline: none;
+  transition: border-color 0.15s ease;
 }
 
 .cancel-reason-modal__textarea:focus {
-  outline: none;
-  border-color: #111;
+  border-color: var(--color-primary);
 }
 
 .cancel-reason-modal__textarea:disabled {
-  background: #f7f7f7;
-  color: #888;
+  background: var(--color-canvas-parchment);
+  color: var(--color-ink-muted-48);
 }
 
 .cancel-reason-modal__count {
   margin: 6px 0 0;
   text-align: right;
+  font-family: var(--font-text);
   font-size: 12px;
-  color: #999;
+  color: var(--color-ink-muted-48);
 }
 
 .cancel-reason-modal__error {
   margin: 10px 0 0;
+  font-family: var(--font-text);
   font-size: 13px;
   color: #c62828;
 }
@@ -87,11 +96,13 @@
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  padding: 12px 18px;
-  border: 1px solid #ddd;
-  background: #fff;
-  color: #333;
+  padding: 11px 22px;
+  border: 1px solid var(--color-hairline);
+  border-radius: var(--radius-pill);
+  background: var(--color-canvas);
+  color: var(--color-ink-muted-80);
   font: inherit;
+  font-family: var(--font-text);
   font-size: 14px;
   font-weight: 600;
   cursor: pointer;
@@ -103,8 +114,8 @@
 }
 
 .cancel-reason-modal__btn--ghost:hover:not(:disabled) {
-  border-color: #111;
-  color: #111;
+  border-color: var(--color-primary);
+  color: var(--color-primary);
 }
 
 .cancel-reason-modal__btn--danger {

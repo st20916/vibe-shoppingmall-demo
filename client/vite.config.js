@@ -8,6 +8,7 @@ export default defineConfig({
     proxy: {
       '/api': {
         target: 'https://port-0-vibe-shoppingmall-demo-mtpocu267fb89ba4.sel3.cloudtype.app/',
+        // target: 'http://localhost:5000/',
         changeOrigin: true,
       },
     },

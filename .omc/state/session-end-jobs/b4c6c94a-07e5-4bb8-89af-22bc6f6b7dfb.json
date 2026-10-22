@@ -1,0 +1,241 @@
+{
+  "version": 1,
+  "jobId": "dffebae1-a010-42c3-ba83-9e9174b67907",
+  "sessionId": "b4c6c94a-07e5-4bb8-89af-22bc6f6b7dfb",
+  "scopeKey": "9913862efda3d033dd872147d0555edb880355822d021f5e1fb24b0f2b01346d",
+  "revision": 0,
+  "createdAt": "2026-10-20T10:15:01.337Z",
+  "updatedAt": "2026-10-20T10:15:01.337Z",
+  "producerGraceExpiresAt": "2026-10-20T10:15:31.338Z",
+  "bestEffortDeadlineAt": "2026-10-20T10:16:24.338Z",
+  "producers": {
+    "core": {
+      "state": "prepared",
+      "intentKey": "c51e966ef93a6ac5b22162edb91e57c8e7cdcdc9d752e34c7c21454b940c3636",
+      "payloadDigest": "c51e966ef93a6ac5b22162edb91e57c8e7cdcdc9d752e34c7c21454b940c3636"
+    },
+    "wiki": {
+      "state": "absent"
+    }
+  },
+  "actions": {
+    "foreground-cleanup": {
+      "class": "required",
+      "phase": "deferred-required",
+      "status": "pending",
+      "attempts": 0,
+      "idempotencyKey": "f1e4aa7c8272b743b2475e730b2f3fcb2164c392555b4711198bf5df10ee3add",
+      "payload": {
+        "transcriptPath": "C:\\Users\\st209\\.claude\\projects\\D--4-Study-03-vibe-codingnoona-shopping-demo\\b4c6c94a-07e5-4bb8-89af-22bc6f6b7dfb.jsonl",
+        "cwd": "D:\\4_Study\\03_vibe\\codingnoona\\shopping-demo\\server",
+        "reason": "other",
+        "input": {
+          "session_id": "b4c6c94a-07e5-4bb8-89af-22bc6f6b7dfb",
+          "transcript_path": "C:\\Users\\st209\\.claude\\projects\\D--4-Study-03-vibe-codingnoona-shopping-demo\\b4c6c94a-07e5-4bb8-89af-22bc6f6b7dfb.jsonl",
+          "cwd": "D:\\4_Study\\03_vibe\\codingnoona\\shopping-demo\\server",
+          "scratchpad_dir": "C:\\Users\\st209\\AppData\\Local\\Temp\\claude\\D--4-Study-03-vibe-codingnoona-shopping-demo\\b4c6c94a-07e5-4bb8-89af-22bc6f6b7dfb\\scratchpad",
+          "prompt_id": "0f578528-e082-406e-915d-a021871791f7",
+          "hook_event_name": "SessionEnd",
+          "reason": "other"
+        },
+        "initialTeamNames": [],
+        "openClawRouting": {}
+      },
+      "budgetMs": 9000
+    },
+    "wiki-capture": {
+      "class": "required",
+      "phase": "deferred-required",
+      "status": "pending",
+      "attempts": 0,
+      "idempotencyKey": "b56acaaa4fda70611d0c735c417c4d19fc790d9b146d58c9a38c73e98cd1095b",
+      "payload": {
+        "transcriptPath": "C:\\Users\\st209\\.claude\\projects\\D--4-Study-03-vibe-codingnoona-shopping-demo\\b4c6c94a-07e5-4bb8-89af-22bc6f6b7dfb.jsonl",
+        "cwd": "D:\\4_Study\\03_vibe\\codingnoona\\shopping-demo\\server",
+        "reason": "other",
+        "input": {
+          "session_id": "b4c6c94a-07e5-4bb8-89af-22bc6f6b7dfb",
+          "transcript_path": "C:\\Users\\st209\\.claude\\projects\\D--4-Study-03-vibe-codingnoona-shopping-demo\\b4c6c94a-07e5-4bb8-89af-22bc6f6b7dfb.jsonl",
+          "cwd": "D:\\4_Study\\03_vibe\\codingnoona\\shopping-demo\\server",
+          "scratchpad_dir": "C:\\Users\\st209\\AppData\\Local\\Temp\\claude\\D--4-Study-03-vibe-codingnoona-shopping-demo\\b4c6c94a-07e5-4bb8-89af-22bc6f6b7dfb\\scratchpad",
+          "prompt_id": "0f578528-e082-406e-915d-a021871791f7",
+          "hook_event_name": "SessionEnd",
+          "reason": "other"
+        },
+        "initialTeamNames": [],
+        "openClawRouting": {}
+      },
+      "budgetMs": 9000
+    },
+    "team-cleanup": {
+      "class": "required",
+      "phase": "deferred-required",
+      "status": "pending",
+      "attempts": 0,
+      "idempotencyKey": "df77beab9060768556bd0deea599ffdeed47f3ea47fd35d51d3158cffff2c660",
+      "payload": {
+        "transcriptPath": "C:\\Users\\st209\\.claude\\projects\\D--4-Study-03-vibe-codingnoona-shopping-demo\\b4c6c94a-07e5-4bb8-89af-22bc6f6b7dfb.jsonl",
+        "cwd": "D:\\4_Study\\03_vibe\\codingnoona\\shopping-demo\\server",
+        "reason": "other",
+        "input": {
+          "session_id": "b4c6c94a-07e5-4bb8-89af-22bc6f6b7dfb",
+          "transcript_path": "C:\\Users\\st209\\.claude\\projects\\D--4-Study-03-vibe-codingnoona-shopping-demo\\b4c6c94a-07e5-4bb8-89af-22bc6f6b7dfb.jsonl",
+          "cwd": "D:\\4_Study\\03_vibe\\codingnoona\\shopping-demo\\server",
+          "scratchpad_dir": "C:\\Users\\st209\\AppData\\Local\\Temp\\claude\\D--4-Study-03-vibe-codingnoona-shopping-demo\\b4c6c94a-07e5-4bb8-89af-22bc6f6b7dfb\\scratchpad",
+          "prompt_id": "0f578528-e082-406e-915d-a021871791f7",
+          "hook_event_name": "SessionEnd",
+          "reason": "other"
+        },
+        "initialTeamNames": [],
+        "openClawRouting": {}
+      },
+      "budgetMs": 9000
+    },
+    "python-cleanup": {
+      "class": "required",
+      "phase": "deferred-required",
+      "status": "pending",
+      "attempts": 0,
+      "idempotencyKey": "baa03971fbf36ae7ad10bb58e74cb71f02cebf07c4551be2b6478c4452d4e9c6",
+      "payload": {
+        "transcriptPath": "C:\\Users\\st209\\.claude\\projects\\D--4-Study-03-vibe-codingnoona-shopping-demo\\b4c6c94a-07e5-4bb8-89af-22bc6f6b7dfb.jsonl",
+        "cwd": "D:\\4_Study\\03_vibe\\codingnoona\\shopping-demo\\server",
+        "reason": "other",
+        "input": {
+          "session_id": "b4c6c94a-07e5-4bb8-89af-22bc6f6b7dfb",
+          "transcript_path": "C:\\Users\\st209\\.claude\\projects\\D--4-Study-03-vibe-codingnoona-shopping-demo\\b4c6c94a-07e5-4bb8-89af-22bc6f6b7dfb.jsonl",
+          "cwd": "D:\\4_Study\\03_vibe\\codingnoona\\shopping-demo\\server",
+          "scratchpad_dir": "C:\\Users\\st209\\AppData\\Local\\Temp\\claude\\D--4-Study-03-vibe-codingnoona-shopping-demo\\b4c6c94a-07e5-4bb8-89af-22bc6f6b7dfb\\scratchpad",
+          "prompt_id": "0f578528-e082-406e-915d-a021871791f7",
+          "hook_event_name": "SessionEnd",
+          "reason": "other"
+        },
+        "initialTeamNames": [],
+        "openClawRouting": {}
+      },
+      "budgetMs": 9000
+    },
+    "reply-cleanup": {
+      "class": "required",
+      "phase": "deferred-required",
+      "status": "pending",
+      "attempts": 0,
+      "idempotencyKey": "08e4a5c61002f6f8e7e0eec798e07599a26d86c9257b9dea7f17c97eeae5c043",
+      "payload": {
+        "transcriptPath": "C:\\Users\\st209\\.claude\\projects\\D--4-Study-03-vibe-codingnoona-shopping-demo\\b4c6c94a-07e5-4bb8-89af-22bc6f6b7dfb.jsonl",
+        "cwd": "D:\\4_Study\\03_vibe\\codingnoona\\shopping-demo\\server",
+        "reason": "other",
+        "input": {
+          "session_id": "b4c6c94a-07e5-4bb8-89af-22bc6f6b7dfb",
+          "transcript_path": "C:\\Users\\st209\\.claude\\projects\\D--4-Study-03-vibe-codingnoona-shopping-demo\\b4c6c94a-07e5-4bb8-89af-22bc6f6b7dfb.jsonl",
+          "cwd": "D:\\4_Study\\03_vibe\\codingnoona\\shopping-demo\\server",
+          "scratchpad_dir": "C:\\Users\\st209\\AppData\\Local\\Temp\\claude\\D--4-Study-03-vibe-codingnoona-shopping-demo\\b4c6c94a-07e5-4bb8-89af-22bc6f6b7dfb\\scratchpad",
+          "prompt_id": "0f578528-e082-406e-915d-a021871791f7",
+          "hook_event_name": "SessionEnd",
+          "reason": "other"
+        },
+        "initialTeamNames": [],
+        "openClawRouting": {}
+      },
+      "budgetMs": 9000
+    },
+    "callback": {
+      "class": "best-effort",
+      "phase": "deferred-best-effort",
+      "status": "pending",
+      "attempts": 0,
+      "idempotencyKey": "af6a7483e68cdecf00ebb9729646c1db2c42fe67fdae1d218952e933396487ef",
+      "payload": {
+        "transcriptPath": "C:\\Users\\st209\\.claude\\projects\\D--4-Study-03-vibe-codingnoona-shopping-demo\\b4c6c94a-07e5-4bb8-89af-22bc6f6b7dfb.jsonl",
+        "cwd": "D:\\4_Study\\03_vibe\\codingnoona\\shopping-demo\\server",
+        "reason": "other",
+        "input": {
+          "session_id": "b4c6c94a-07e5-4bb8-89af-22bc6f6b7dfb",
+          "transcript_path": "C:\\Users\\st209\\.claude\\projects\\D--4-Study-03-vibe-codingnoona-shopping-demo\\b4c6c94a-07e5-4bb8-89af-22bc6f6b7dfb.jsonl",
+          "cwd": "D:\\4_Study\\03_vibe\\codingnoona\\shopping-demo\\server",
+          "scratchpad_dir": "C:\\Users\\st209\\AppData\\Local\\Temp\\claude\\D--4-Study-03-vibe-codingnoona-shopping-demo\\b4c6c94a-07e5-4bb8-89af-22bc6f6b7dfb\\scratchpad",
+          "prompt_id": "0f578528-e082-406e-915d-a021871791f7",
+          "hook_event_name": "SessionEnd",
+          "reason": "other"
+        },
+        "initialTeamNames": [],
+        "openClawRouting": {}
+      },
+      "budgetMs": 2000
+    },
+    "notification": {
+      "class": "best-effort",
+      "phase": "deferred-best-effort",
+      "status": "pending",
+      "attempts": 0,
+      "idempotencyKey": "b34dd6268f5393cbc41782cc8f02b0d8f3adfbe8a02ad0ffca1340df021f1e2a",
+      "payload": {
+        "transcriptPath": "C:\\Users\\st209\\.claude\\projects\\D--4-Study-03-vibe-codingnoona-shopping-demo\\b4c6c94a-07e5-4bb8-89af-22bc6f6b7dfb.jsonl",
+        "cwd": "D:\\4_Study\\03_vibe\\codingnoona\\shopping-demo\\server",
+        "reason": "other",
+        "input": {
+          "session_id": "b4c6c94a-07e5-4bb8-89af-22bc6f6b7dfb",
+          "transcript_path": "C:\\Users\\st209\\.claude\\projects\\D--4-Study-03-vibe-codingnoona-shopping-demo\\b4c6c94a-07e5-4bb8-89af-22bc6f6b7dfb.jsonl",
+          "cwd": "D:\\4_Study\\03_vibe\\codingnoona\\shopping-demo\\server",
+          "scratchpad_dir": "C:\\Users\\st209\\AppData\\Local\\Temp\\claude\\D--4-Study-03-vibe-codingnoona-shopping-demo\\b4c6c94a-07e5-4bb8-89af-22bc6f6b7dfb\\scratchpad",
+          "prompt_id": "0f578528-e082-406e-915d-a021871791f7",
+          "hook_event_name": "SessionEnd",
+          "reason": "other"
+        },
+        "initialTeamNames": [],
+        "openClawRouting": {}
+      },
+      "budgetMs": 2000
+    },
+    "openclaw": {
+      "class": "best-effort",
+      "phase": "deferred-best-effort",
+      "status": "pending",
+      "attempts": 0,
+      "idempotencyKey": "2310b428e77be98142ddd78fcd20e72746b3c79d9f6197561cd949141da5edd7",
+      "payload": {
+        "transcriptPath": "C:\\Users\\st209\\.claude\\projects\\D--4-Study-03-vibe-codingnoona-shopping-demo\\b4c6c94a-07e5-4bb8-89af-22bc6f6b7dfb.jsonl",
+        "cwd": "D:\\4_Study\\03_vibe\\codingnoona\\shopping-demo\\server",
+        "reason": "other",
+        "input": {
+          "session_id": "b4c6c94a-07e5-4bb8-89af-22bc6f6b7dfb",
+          "transcript_path": "C:\\Users\\st209\\.claude\\projects\\D--4-Study-03-vibe-codingnoona-shopping-demo\\b4c6c94a-07e5-4bb8-89af-22bc6f6b7dfb.jsonl",
+          "cwd": "D:\\4_Study\\03_vibe\\codingnoona\\shopping-demo\\server",
+          "scratchpad_dir": "C:\\Users\\st209\\AppData\\Local\\Temp\\claude\\D--4-Study-03-vibe-codingnoona-shopping-demo\\b4c6c94a-07e5-4bb8-89af-22bc6f6b7dfb\\scratchpad",
+          "prompt_id": "0f578528-e082-406e-915d-a021871791f7",
+          "hook_event_name": "SessionEnd",
+          "reason": "other"
+        },
+        "initialTeamNames": [],
+        "openClawRouting": {}
+      },
+      "budgetMs": 2000
+    },
+    "spawn-next": {
+      "class": "best-effort",
+      "phase": "deferred-best-effort",
+      "status": "pending",
+      "attempts": 0,
+      "idempotencyKey": "ae9bcb784a79c65d31fdebf0ae6c0ccd77b642545d236baeeecd73ce1315ba16",
+      "payload": {
+        "transcriptPath": "C:\\Users\\st209\\.claude\\projects\\D--4-Study-03-vibe-codingnoona-shopping-demo\\b4c6c94a-07e5-4bb8-89af-22bc6f6b7dfb.jsonl",
+        "cwd": "D:\\4_Study\\03_vibe\\codingnoona\\shopping-demo\\server",
+        "reason": "other",
+        "input": {
+          "session_id": "b4c6c94a-07e5-4bb8-89af-22bc6f6b7dfb",
+          "transcript_path": "C:\\Users\\st209\\.claude\\projects\\D--4-Study-03-vibe-codingnoona-shopping-demo\\b4c6c94a-07e5-4bb8-89af-22bc6f6b7dfb.jsonl",
+          "cwd": "D:\\4_Study\\03_vibe\\codingnoona\\shopping-demo\\server",
+          "scratchpad_dir": "C:\\Users\\st209\\AppData\\Local\\Temp\\claude\\D--4-Study-03-vibe-codingnoona-shopping-demo\\b4c6c94a-07e5-4bb8-89af-22bc6f6b7dfb\\scratchpad",
+          "prompt_id": "0f578528-e082-406e-915d-a021871791f7",
+          "hook_event_name": "SessionEnd",
+          "reason": "other"
+        },
+        "initialTeamNames": [],
+        "openClawRouting": {}
+      },
+      "budgetMs": 2000
+    }
+  },
+  "owner": null,
+  "phase": "collecting"
+}

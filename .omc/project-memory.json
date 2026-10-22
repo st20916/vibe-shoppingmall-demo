@@ -1,6 +1,6 @@
 {
   "version": "1.0.0",
-  "lastScanned": 1792484109945,
+  "lastScanned": 1792654168194,
   "projectRoot": "D:\\4_Study\\03_vibe\\codingnoona\\shopping-demo",
   "techStack": {
     "languages": [],
@@ -33,7 +33,7 @@
       "path": "client",
       "purpose": null,
       "fileCount": 9,
-      "lastAccessed": 1792484109881,
+      "lastAccessed": 1792654168101,
       "keyFiles": [
         "index.html",
         "package-lock.json",
@@ -46,7 +46,7 @@
       "path": "server",
       "purpose": null,
       "fileCount": 6,
-      "lastAccessed": 1792484109881,
+      "lastAccessed": 1792654168102,
       "keyFiles": [
         "package-lock.json",
         "package.json",
@@ -57,7 +57,7 @@
       "path": "client\\dist",
       "purpose": "Distribution/build output",
       "fileCount": 3,
-      "lastAccessed": 1792484109882,
+      "lastAccessed": 1792654168103,
       "keyFiles": [
         "favicon.svg",
         "icons.svg",
@@ -68,31 +68,21 @@
       "path": "client\\node_modules",
       "purpose": "Dependencies",
       "fileCount": 1,
-      "lastAccessed": 1792484109883,
+      "lastAccessed": 1792654168104,
       "keyFiles": []
-    },
-    "client\\public": {
-      "path": "client\\public",
-      "purpose": "Public files",
-      "fileCount": 2,
-      "lastAccessed": 1792484109884,
-      "keyFiles": [
-        "favicon.svg",
-        "icons.svg"
-      ]
     },
     "server\\node_modules": {
       "path": "server\\node_modules",
       "purpose": "Dependencies",
       "fileCount": 1,
-      "lastAccessed": 1792484109885,
+      "lastAccessed": 1792654168106,
       "keyFiles": []
     },
     "server\\src": {
       "path": "server\\src",
       "purpose": "Source code",
       "fileCount": 2,
-      "lastAccessed": 1792484109885,
+      "lastAccessed": 1792654168106,
       "keyFiles": [
         "app.js",
         "index.js"

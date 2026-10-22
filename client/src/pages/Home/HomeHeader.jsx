@@ -1,14 +1,18 @@
-import { Link } from 'react-router-dom';
+import { Link, useNavigate, useSearchParams } from 'react-router-dom';
 import CartIconLink from '../../components/CartIconLink';
+import PopularSearchTicker from '../../components/PopularSearchTicker';
 import UserMenu from '../../components/UserMenu';
 import { NAV_ITEMS } from '../../data/homeData';
 
 function HomeHeader({ user, isAdmin, onLogout }) {
+  const navigate = useNavigate();
+  const [searchParams] = useSearchParams();
+
   const handleSearchSubmit = (event) => {
     event.preventDefault();
     const query = new FormData(event.currentTarget).get('q')?.toString().trim();
     if (query) {
-      alert(`"${query}" 검색 기능은 준비 중입니다.`);
+      navigate(`/search?q=${encodeURIComponent(query)}`);
     }
   };
 
@@ -54,13 +58,20 @@ function HomeHeader({ user, isAdmin, onLogout }) {
           <input
             type="search"
             name="q"
+            defaultValue={searchParams.get('q') || ''}
             placeholder="검색어를 입력하세요"
             aria-label="상품 검색"
           />
           <button type="submit" className="home-search__submit">
-            SEARCH
+            검색
           </button>
         </form>
+      </div>
+
+      <div className="home-popular-bar">
+        <div className="home-popular-bar__inner">
+          <PopularSearchTicker />
+        </div>
       </div>
 
       <nav className="home-nav" aria-label="주요 메뉴">

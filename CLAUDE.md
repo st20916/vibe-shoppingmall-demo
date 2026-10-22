@@ -1,5 +1,4 @@
 # 프로젝트 개요
-
 쇼핑몰 데모 프로젝트. React 기반 클라이언트(SPA)와 Express 기반 서버(REST API)로 구성되어 있으며, 회원/상품/카테고리/장바구니/주문(결제)과 관리자 백오피스를 제공한다.
 
 ## client (`client/`)
@@ -35,3 +34,6 @@
 - `routes/` — index.js + userRoutes, authRoutes, productRoutes, categoryRoutes, cartRoutes, orderRoutes
 
 **주요 기능**: 인증(로그인, `/me`), 회원 관리(CRUD + count, 역할: customer/seller/admin), 상품 CRUD(페이지네이션/검색), 카테고리 CRUD(기본 보호 카테고리 3개), 장바구니(JWT 보호, 아이템 추가/수정/삭제), 주문(장바구니 기반 체크아웃 + PortOne 결제 검증, 상태 흐름 pending→paid→preparing→shipping→delivered/cancelled, 관리자 전용 전체 주문 목록/상태별 카운트)
+
+## 주의
+- 환경변수는 `.env.example` 참고, `.env`는 절대 커밋하지 않음

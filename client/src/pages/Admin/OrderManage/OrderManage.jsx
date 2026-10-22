@@ -2,6 +2,7 @@ import { useEffect, useMemo, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { getAdminOrders, updateOrder } from '../../../api/orderApi';
 import CancelReasonModal from '../../../components/CancelReasonModal';
+import CancelReasonViewModal from '../../../components/CancelReasonViewModal';
 import { useAuth } from '../../../hooks/useAuth';
 import HomeFooter from '../../Home/HomeFooter';
 import AdminHeader from '../AdminHeader';
@@ -69,6 +70,7 @@ function OrderManage() {
   const [pendingId, setPendingId] = useState('');
   const [searchQuery, setSearchQuery] = useState('');
   const [cancelModal, setCancelModal] = useState(null);
+  const [reasonViewModal, setReasonViewModal] = useState(null);
 
   useEffect(() => {
     if (isLoading) return;
@@ -337,9 +339,22 @@ function OrderManage() {
                           </select>
                         </td>
                         <td className="order-manage__cancel-reason">
-                          {order.status === 'cancelled' && order.cancelReason
-                            ? order.cancelReason
-                            : '-'}
+                          {order.status === 'cancelled' && order.cancelReason ? (
+                            <button
+                              type="button"
+                              className="order-manage__cancel-reason-btn"
+                              onClick={() =>
+                                setReasonViewModal({
+                                  orderLabel: order.order_id,
+                                  reason: order.cancelReason,
+                                })
+                              }
+                            >
+                              {order.cancelReason}
+                            </button>
+                          ) : (
+                            '-'
+                          )}
                         </td>
                       </tr>
                     ))}
@@ -362,6 +377,14 @@ function OrderManage() {
             setCancelModal(null);
           }}
           onConfirm={handleConfirmCancel}
+        />
+      )}
+
+      {reasonViewModal && (
+        <CancelReasonViewModal
+          orderLabel={reasonViewModal.orderLabel}
+          reason={reasonViewModal.reason}
+          onClose={() => setReasonViewModal(null)}
         />
       )}
     </div>

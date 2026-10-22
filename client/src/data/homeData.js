@@ -5,15 +5,15 @@ export const HERO_BANNERS = [
     id: 1,
     image:
       'https://bmbx-prd.my.commercecloud.salesforce.com/on/demandware.static/-/Sites-wackywilly_kr-Library/default/CAMPAIGN/Woni-day/woni_001_1st.jpg',
-    alt: '남성 패션',
+    alt: '와키윌리 오늘은 원이 데이 ~',
   },
   {
     id: 2,
     image:
-      'https://images.unsplash.com/photo-1608571423902-eed4a5ad8108?auto=format&fit=crop&w=600&q=80',
-    alt: '명절 선물',
-    title: '대한민국 홍삼 NO.1',
-    subtitle: '명절의 꽃, 정관장으로',
+      'https://cdn-onlinemall.mlb-korea.com/cdn-cgi/image/q=75,w=560,format=auto,fit=scale-down,onerror=redirect/images/MBM-e59f1aa21a934eff941e117acda008c6.jpg',
+    alt: 'MLB 리센느',
+    title: '@MLBKOREA',
+    subtitle: 'SLEEK, THE RESCENE WAY',
   },
   {
     id: 3,

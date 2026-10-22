@@ -21,6 +21,7 @@ function SignUp() {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [error, setError] = useState('');
   const [success, setSuccess] = useState('');
+  const [sameAsId, setSameAsId] = useState(false);
 
   const [form, setForm] = useState({
     user_id: '',
@@ -34,6 +35,14 @@ function SignUp() {
 
   const handleChange = (field) => (e) => {
     setForm((prev) => ({ ...prev, [field]: e.target.value }));
+  };
+
+  const handleSameAsIdChange = (e) => {
+    const checked = e.target.checked;
+    setSameAsId(checked);
+    if (checked) {
+      setForm((prev) => ({ ...prev, email: prev.user_id }));
+    }
   };
 
   const buildAddress = () => {
@@ -157,12 +166,22 @@ function SignUp() {
           </FormRow>
 
           <FormRow label="이메일" required>
-            <input
-              type="email"
-              className="medium"
-              value={form.email}
-              onChange={handleChange('email')}
-            />
+            <div className="email-field">
+              <input
+                type="email"
+                className="medium"
+                value={form.email}
+                onChange={handleChange('email')}
+              />
+              <label className="same-as-id">
+                <input
+                  type="checkbox"
+                  checked={sameAsId}
+                  onChange={handleSameAsIdChange}
+                />
+                아이디와 동일
+              </label>
+            </div>
           </FormRow>
         </div>
 
